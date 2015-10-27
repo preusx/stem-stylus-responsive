@@ -1,0 +1,19 @@
+// @describe Icons
+
+// @it Base
+
+icon-namespace-set('FontAwesome', 'fa')
+
+icon-add('phone', 'p')
+icon-add('email', 'e')
+
+.ic
+    icon-apply()
+
+// @expects
+
+.ic-fa:before{display:inline-block;height:1px;width:1em;font-style:normal;font-weight:400;speak:none;line-height:1px;text-decoration:inherit;text-align:center;text-rendering:optimizeLegibility;vertical-align:inherit;vertical-align:middle;content:"";text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;font-smoothing:antialiased}
+.ic-fa{display:inline}
+.ic-fa:before{font-family:FontAwesome}
+.ic-fa--phone:before{content:'p'}
+.ic-fa--email:before{content:'e'}
