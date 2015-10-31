@@ -5,9 +5,9 @@ var testRunnerConfig = {
       stylus.include(__dirname + '../');
     },
     import: [
+      '../bower_components/stem-stylus-extensions',
       '../bower_components/stem-stylus-utils',
-      '../bower_components/stem-stylus-bem',
-      '../icon'
+      '../index'
       ]
   }
 }
