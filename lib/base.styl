@@ -1,0 +1,164 @@
+/**
+ * Mixins
+ * ======================================================================== */
+
+/**
+ * Private utility mixins.
+ */
+
+-responsive_breakpoint(breakpoint, ao=false)
+    if is_string(breakpoint) || is_ident(breakpoint)
+        breakpoint = Responsive.bp[breakpoint]
+
+    if Responsive.anti-overlap && ao && breakpoint > 0
+        breakpoint = to_px(breakpoint) - 1px
+
+    if Responsive.em
+        breakpoint = to_em(breakpoint)
+
+    return breakpoint
+
+
+-responsive_edges(from=0, to=0, use-device-width=Responsive.use-device-width)
+    query = ()
+    sizes = -responsive_breakpoint(from), -responsive_breakpoint(to, true)
+    dvc = use-device-width ? 'device-' : ''
+    templates = '(min-' + dvc + 'width: %s)', '(max-' + dvc + 'width: %s)'
+
+    for i in 0..1
+        if sizes[i] > 0
+            push(query, templates[i] % sizes[i])
+
+    return join(' and ', query)
+
+
+-responsive_orientation(orientation)
+    orientation = convert(orientation)
+
+    return '(orientation: %s)' % orientation
+
+
+-responsive_density(density)
+    density = Responsive.retina-density if density is 'retina'
+    density = convert('' + density)
+
+    query = '' +\
+        '(-webkit-min-device-pixel-ratio: %s)' % density +\
+        ' and (min--moz-device-pixel-ratio: %s)' % density +\
+        ' and (-o-min-device-pixel-ratio: %s/1)' % density +\
+        ' and (min-device-pixel-ratio: %s)' % density +\
+        ' and (min-resolution: %sdpi)' % round(density * DPI, 1)
+
+    return query
+
+
+-responsive_query(
+        from=0,
+        to=0,
+        density=null,
+        orientation=null,
+        use-device-width=Responsive.use-device-width
+        )
+    query = 'only screen'
+    edges = -responsive_edges(from, to, use-device-width)
+    query += edges ? ' and ' + edges : ''
+
+    if orientation
+      query += ' and ' + -responsive_orientation(orientation)
+
+    if density
+      query += ' and ' + -responsive_density(density)
+
+    return query
+
+
+-responsive-media(
+        from=0,
+        to=0,
+        density=null,
+        orientation=null,
+        use-device-width=Responsive.use-device-width,
+        fallback=Responsive.fallback
+        )
+    query = -responsive_query(from, to, density, orientation, use-device-width)
+
+    if Responsive.cachable
+        helper(q)
+            unless _ResponsiveCache[q]
+                _ResponsiveCache[q] = ()
+
+            push(_ResponsiveCache[q], block)
+
+        +helper(query)
+            {selector('&') + ''}
+                {block}
+
+            if fallback
+                /{fallback + ' ' + selector('&')}
+                    {block}
+
+    else
+        @media query
+            {block}
+
+        if fallback
+            {fallback} &
+                {block}
+
+
+-responsive-apply-cache()
+    for query, blocks in _ResponsiveCache
+        @media query
+            for $block in blocks
+                {$block}
+
+
+/**
+ * Public mixins.
+ */
+
+between(
+        from,
+        to,
+        density=null,
+        orientation=null,
+        use-device-width=Responsive.use-device-width,
+        fallback=Responsive.fallback,
+        o=orientation,
+        d=density,
+        dw=use-device-width
+        )
+    +-responsive-media(from, to, d, o, dw, fallback)
+        {block}
+
+
+from(
+        from,
+        density=null,
+        orientation=null,
+        use-device-width=Responsive.use-device-width,
+        fallback=Responsive.fallback,
+        o=orientation,
+        d=density,
+        dw=use-device-width
+        )
+    +-responsive-media(from, 0, d, o, dw, fallback)
+        {block}
+
+above = from
+
+
+to(
+        to,
+        density=null,
+        orientation=null,
+        use-device-width=Responsive.use-device-width,
+        fallback=Responsive.fallback,
+        o=orientation,
+        d=density,
+        dw=use-device-width
+        )
+    +-responsive-media(0, to, d, o, dw, fallback)
+        {block}
+
+below = to
