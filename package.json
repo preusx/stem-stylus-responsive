@@ -1,6 +1,6 @@
 {
   "name": "stem-stylus-responsive",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "main": "./index.styl",
   "author": "Alex Tkachenko <preusx.dev@gmail.com>",
   "license": "MIT",
@@ -12,13 +12,13 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/preusx/stem-stylus-grid.git"
+    "url": "git://github.com/preusx/stem-stylus-responsive.git"
   },
   "scripts": {
     "test": "node ./test/run.js"
   },
   "devDependencies": {
-    "stylus": "^0.52.0",
+    "stylus": "^0.52.4",
     "stylus-test-runner": "git://github.com/preusx/stylus-test-runner.git#master"
   },
   "dependencies": {
