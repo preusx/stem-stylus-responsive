@@ -1,6 +1,6 @@
 {
   "name": "stem-stylus-responsive",
-  "version": "0.2.4",
+  "version": "0.2.5",
   "main": "./index.styl",
   "author": "Alex Tkachenko <preusx.dev@gmail.com>",
   "license": "MIT",
@@ -9,10 +9,10 @@
     "index.styl"
   ],
   "dependencies": {
-    "stem-stylus-extensions": "preusx/stem-stylus-extensions#0.2.4"
+    "stem-stylus-extensions": "preusx/stem-stylus-extensions#0.2.8"
   },
   "devDependencies": {
-    "stem-stylus-extensions": "preusx/stem-stylus-extensions#0.2.4"
+    "stem-stylus-extensions": "preusx/stem-stylus-extensions#0.2.8"
   },
   "ignore": [
     "**/.*",
