@@ -1,6 +1,6 @@
 {
   "name": "stem-stylus-responsive",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "main": "./index.styl",
   "author": "Alex Tkachenko <preusx.dev@gmail.com>",
   "license": "MIT",
@@ -18,7 +18,7 @@
     "test": "node ./test/run.js"
   },
   "devDependencies": {
-    "stylus": "^0.52.4",
+    "stylus": "^0.54.5",
     "stylus-test-runner": "git://github.com/preusx/stylus-test-runner.git#master"
   },
   "dependencies": {
